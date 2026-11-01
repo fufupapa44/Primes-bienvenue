@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://primes-bienvenue.quentinsalvat5.workers.dev/sitemap.xml
