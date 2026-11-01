@@ -1,0 +1,7 @@
+(function(){var d=document,R=d.documentElement,B=R.getAttribute('data-beacon')||'',P=R.getAttribute('data-page')||'/';
+var q=new URLSearchParams(location.search),c=(q.get('c')||'').replace(/[^a-z0-9_-]/gi,'').slice(0,60);try{if(c)sessionStorage.setItem('fmos_c',c);else c=sessionStorage.getItem('fmos_c')||''}catch(e){}
+var prev=/\/diffusion\/preview\//.test(location.pathname);
+function send(k){if(!B||prev)return;try{fetch(B,{method:'POST',mode:'cors',keepalive:true,credentials:'omit',headers:{'content-type':'application/json','ngrok-skip-browser-warning':'1'},body:JSON.stringify({k:k,p:P,c:c})}).catch(function(){})}catch(e){}}
+function toast(t){var e=d.createElement('div');e.className='toast';e.textContent=t;d.body.appendChild(e);requestAnimationFrame(function(){e.classList.add('on')});setTimeout(function(){e.remove()},1600)}
+d.addEventListener('click',function(e){var b=e.target.closest('[data-copy]');if(b){e.preventDefault();var v=b.getAttribute('data-copy');(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(function(){toast('Code copié ✓')},function(){var t=d.createElement('textarea');t.value=v;d.body.appendChild(t);t.select();try{d.execCommand('copy');toast('Code copié ✓')}catch(x){}t.remove()});send('k');return}
+var a=e.target.closest('a[data-out]');if(a)send('c')});send('v')})();
